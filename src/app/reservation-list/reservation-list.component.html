@@ -19,7 +19,7 @@
             <td>{{ reservation.checkOutDate }}</td>
             <td>{{ reservation.roomNumber }}</td>
             <td>
-                <button>Update</button>
+                <button [routerLink]="['/update-reservation', reservation.id]">Update</button>
                 <button (click)="deleteReservation(reservation.id)">Delete</button>
             </td>
         </tr>
