@@ -2,22 +2,42 @@
     <div>
         <label>Check-In Date:</label>
         <input type="date" formControlName="checkInDate">
+        <small *ngIf="reservationForm.get('checkInDate')?.invalid && reservationForm.get('checkInDate')?.touched">
+            * Check-In Date Requried
+        </small>
     </div>
     <div>
         <label>Check-Out Date:</label>
         <input type="date" formControlName="checkOutDate">
+        <small *ngIf="reservationForm.get('checkOutDate')?.invalid && reservationForm.get('checkOutDate')?.touched">
+            * Check-Out Date Requried
+        </small>
     </div>
     <div>
         <label>Guest Name:</label>
         <input type="text" formControlName="guestName">
+        <small *ngIf="reservationForm.get('guestName')?.invalid && reservationForm.get('guestName')?.touched">
+            * Guest Name Requried
+        </small>
     </div>
     <div>
         <label>Guest Email:</label>
         <input type="email" formControlName="guestEmail">
+        <small *ngIf="reservationForm.get('guestEmail')?.invalid && reservationForm.get('guestEmail')?.touched">
+            <div *ngIf="reservationForm.get('guestEmail')?.errors?.['required']" style="color: red;">
+                * Guest Email Required
+            </div>
+            <div *ngIf="reservationForm.get('guestEmail')?.errors?.['email']" style="color: red;">
+                * Invalid Email Format
+            </div>
+        </small>
     </div>
     <div>
         <label>Room Number:</label>
         <input type="number" formControlName="roomNumber">
+        <small *ngIf="reservationForm.get('roomNumber')?.invalid && reservationForm.get('roomNumber')?.touched">
+            * Room Number Requried
+        </small>
     </div>
     
     <button type="submit" [disabled]="reservationForm.invalid">Submit</button>
