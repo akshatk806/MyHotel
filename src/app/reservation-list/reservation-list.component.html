@@ -1,1 +1,32 @@
-<p>reservation-list works!</p>
+<h3 class="mt-4 text-center">Reservation List</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Guest Name</th>
+            <th>Guest Email</th>
+            <th>Check In</th>
+            <th>Check Out</th>
+            <th>Room</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="reservations.length; else noReservation">
+        <tr *ngFor="let reservation of reservations;">
+            <td>{{ reservation.guestName }}</td>
+            <td>{{ reservation.guestEmail }}</td>
+            <td>{{ reservation.checkInDate }}</td>
+            <td>{{ reservation.checkOutDate }}</td>
+            <td>{{ reservation.roomNumber }}</td>
+            <td>
+                <button>Update</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- This can only rendered when we want to. this is local reference -->
+<ng-template #noReservation>
+    <p>No reservation available</p>
+</ng-template>
