@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReservationService } from '../reservation/reservation.service';
+import { Reservation } from '../models/reservation';
 
 @Component({
   selector: 'app-reservation-form',
@@ -13,7 +15,8 @@ export class ReservationFormComponent implements OnInit {
   reservationForm: FormGroup = new FormGroup({});
 
   // dependency injection 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, 
+    private reservationService: ReservationService) {
     // DI -> we have a system in angular that knows here ReservationFormComponent knows once we have formBuilder. Once we created a instance of component the angular DI creates an instance of form builder and submits it to this constructor so we can use it
     // formBuilder injected into our reservation-form component
     // once we create a instance of form component the angular dependency injection creates an instance of formbuilder and submites it to this contructor
@@ -42,6 +45,11 @@ export class ReservationFormComponent implements OnInit {
       // we use form builder to take of all our form control(input fields) to group them all together
       // we specify all our rules in ngOnInit()
       // valid means -> all control are validated properly
+
+      // grabbing the reservation from form
+      let reservation: Reservation = this.reservationForm.value;   // from form group
+
+      this.reservationService.createReservation(reservation);
     }
   }
 }
