@@ -6,8 +6,18 @@ import { v4 as uuidv4 } from 'uuid';
   providedIn: 'root'
 })
 export class ReservationService {
-
   private reservations: Reservation[] = [];
+
+  // this is happening before ngOnIt lifecycle hook invoked
+  // because later on we have to load the data from service from the component in the lifecycle hook and this is invoked after constructor of service get invoked
+  // ** constructor is loaded before ngOnIt life cycle hook
+  // constructor is used to load all reservations from local storage
+  constructor() {
+    if(typeof localStorage !== 'undefined') {
+      let savedReservation = localStorage.getItem("reservations");
+      this.reservations = savedReservation ? JSON.parse(savedReservation) : [];
+    }
+  }
 
   // CRUD
 
