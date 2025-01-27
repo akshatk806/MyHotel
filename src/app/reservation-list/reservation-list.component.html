@@ -20,7 +20,7 @@
             <td>{{ reservation.roomNumber }}</td>
             <td>
                 <button>Update</button>
-                <button>Delete</button>
+                <button (click)="deleteReservation(reservation.id)">Delete</button>
             </td>
         </tr>
     </tbody>
