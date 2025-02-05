@@ -43,10 +43,16 @@ export class ReservationFormComponent implements OnInit {
     // get an id from activate route
     let reservationId = this.activatedRoute.snapshot.paramMap.get('id');
     if(reservationId) {
-      let reservation = this.reservationService.getReservation(reservationId);
+      this.reservationService.getReservation(reservationId).subscribe(reservation => {
+        if(reservation) {
+          this.reservationForm.patchValue(reservation)
+        }
+      });
+      /*
       if(reservation) {
         this.reservationForm.patchValue(reservation)   // getting value from reservation and patch to form means the form is filled already (pre-filled)
       }
+      */
     }
   }
 
@@ -64,11 +70,13 @@ export class ReservationFormComponent implements OnInit {
       let reservationId = this.activatedRoute.snapshot.paramMap.get('id');   // if we have id then this is the form for update
       if(reservationId) {
         // updated
-        this.reservationService.updateReservation(reservationId, reservation);   // reservation from the form doesn't have an id
+        //this.reservationService.updateReservation(reservationId, reservation);   // reservation from the form doesn't have an id
+        this.reservationService.updateReservation(reservationId, reservation).subscribe(() => console.log("update request processed"))
       }
       else {
         // here we call service to add new service
-        this.reservationService.createReservation(reservation);
+        // this.reservationService.createReservation(reservation);
+        this.reservationService.createReservation(reservation).subscribe(() => console.log("post request processed"));
       }
 
       // we need a router instance to navigate

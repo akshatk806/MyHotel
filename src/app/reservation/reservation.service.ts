@@ -39,32 +39,44 @@ export class ReservationService {
     return this.httpClient.get<Reservation[]>(this.apiUrl + "/reservations");   // endpoint
   }
 
-  getReservation(id: string) : Reservation | undefined {     // we return a reservation value or a value which is undefined because we don't have a reservation corresponding to id (because of find method)
-    return this.reservations.find(res => res.id === id)
+  getReservation(id: string) : Observable<Reservation> {     // we return a reservation value or a value which is undefined because we don't have a reservation corresponding to id (because of find method)
+    //return this.reservations.find(res => res.id === id)
+    return this.httpClient.get<Reservation>(this.apiUrl + "/reservation/" + id);
   }
 
-  createReservation(reservation: Reservation) : void {
+  createReservation(reservation: Reservation) : Observable<void> {
     reservation.id = uuidv4();
+    /*
     this.reservations.push(reservation);
     if(typeof localStorage !== 'undefined') {
       localStorage.setItem("reservations", JSON.stringify(this.reservations));
     }
+    */
+    return this.httpClient.post<void>(this.apiUrl + "/reservation", reservation);
   }
 
-  deleteReservation(id: string): void {
+  deleteReservation(id: string): Observable<void> {
+    /*
     let index = this.reservations.findIndex(res => res.id === id);
     this.reservations.splice(index, 1);
     if(typeof localStorage !== 'undefined') {
       localStorage.setItem("reservations", JSON.stringify(this.reservations));
     }
+    */
+
+    return this.httpClient.delete<void>(this.apiUrl + "/reservation/" + id);
   }
 
-  updateReservation(id:string, updatedReservation: Reservation): void {
+  updateReservation(id:string, updatedReservation: Reservation): Observable<void> {
+    /*
     let index = this.reservations.findIndex(res => res.id === id);
-    updatedReservation.id = id;
     this.reservations[index] = updatedReservation;
     if(typeof localStorage !== 'undefined') {
       localStorage.setItem("reservations", JSON.stringify(this.reservations));
     }
+    */
+     
+    updatedReservation.id = id;
+    return this.httpClient.put<void>(this.apiUrl + "/reservation/" + id, updatedReservation);
   }
 }
