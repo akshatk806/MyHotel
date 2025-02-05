@@ -18,7 +18,10 @@ export class ReservationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reservations = this.reservationService.getAllReservations();
+    // here we take our reservation service we call the asynchrunous reservation method which is sending a required to our mookon backend api which returns an obserable, subscribing to obserable and once it done we can get the return value which could be our reservations 
+    this.reservationService.getAllReservations().subscribe(reservations => {
+      this.reservations = reservations    // we put the value from actual result to our reservations property
+    });
   }
 
   deleteReservation(id: string) {
